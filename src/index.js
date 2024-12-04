@@ -5,7 +5,6 @@ const startButton = document.querySelector(".js-start-button");
 const statusSpan = document.querySelector(".js-status");
 const heading = document.querySelector(".js-heading");
 const padContainer = document.querySelector(".js-pad-container");
-
 /**
  * VARIABLES
  */
@@ -50,7 +49,23 @@ padContainer.addEventListener("click", padHandler);
 /**
  * EVENT HANDLERS
  */
+const testAudioButton = document.querySelector(".js-test-audio");
+testAudioButton.addEventListener("click", function () {
+  const victoryMusic = new Audio("assets/kazoo-victory.mp3");
+  victoryMusic.play().then(() => {
+    console.log("Victory music is playing!");
+  }).catch((error) => {
+    console.log("Error playing audio:", error);
+  });
+});
+
 function startButtonHandler() {
+  // Play start music
+  const startMusic = new Audio("../assets/simon-says-sound-1.mp3");
+  startMusic.play()
+    .then(() => console.log("Start music playing!"))
+    .catch((error) => console.error("Error playing start music:", error));
+
   maxRoundCount = setLevel(1); // Default level
   roundCount = 1;
   startButton.classList.add("hidden");
@@ -146,7 +161,21 @@ function checkRound() {
 }
 
 function resetGame(text) {
+  const victoryMusic = new Audio("../assets/kazoo-victory.mp3");
+  const failureMusic = new Audio("../assets/yikes-failure.mp3");
+
+  if (text.includes("won")) {
+    victoryMusic.play()
+      .then(() => console.log("Victory music playing!"))
+      .catch((error) => console.error("Error playing victory music:", error));
+  } else {
+    failureMusic.play()
+      .then(() => console.log("Failure music playing!"))
+      .catch((error) => console.error("Error playing failure music:", error));
+  }
+
   alert(text);
+
   setText(heading, "Simon Says");
   startButton.classList.remove("hidden");
   statusSpan.classList.add("hidden");
@@ -178,4 +207,4 @@ window.playComputerTurn = playComputerTurn;
 window.playHumanTurn = playHumanTurn;
 window.checkPress = checkPress;
 window.checkRound = checkRound;
-window.resetGame = resetGame;
+window.resetGame = resetGame; // Line 211
