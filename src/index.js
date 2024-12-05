@@ -136,13 +136,18 @@ function checkPress(color) {
   playerSequence.push(color);
   const index = playerSequence.length - 1;
 
+  console.log("Player Sequence:", playerSequence);
+  console.log("Computer Sequence:", computerSequence);
+
   if (playerSequence[index] !== computerSequence[index]) {
+    console.error("Mismatch detected!");
     resetGame("Incorrect sequence! Game over.");
     return;
   }
 
   const remainingPresses = computerSequence.length - playerSequence.length;
   setText(statusSpan, `Presses left: ${remainingPresses}`);
+  console.log(`Remaining presses: ${remainingPresses}`);
 
   if (remainingPresses === 0) {
     checkRound();
